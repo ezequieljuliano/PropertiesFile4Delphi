@@ -1,0 +1,2 @@
+PropertiesFile4Delphi
+=====================
