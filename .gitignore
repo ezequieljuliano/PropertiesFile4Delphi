@@ -1,0 +1,6 @@
+/src/__history
+/unittest/*.skincfg
+
+/unittest/Win32/Release
+
+/unittest/__history

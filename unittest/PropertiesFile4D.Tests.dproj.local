@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>2013/11/11 17:09:26.000.550,=D:\Delphi\EasyProp-PropertiesFile4Delphi\unittest\Unit1.pas</Transaction>
+    <Transaction>2013/11/11 17:09:49.000.086,D:\Delphi\EasyProp-PropertiesFile4Delphi\unittest\Unit1.pas=D:\Delphi\EasyProp-PropertiesFile4Delphi\src\EasyProp.PropertiesFile.pas</Transaction>
+    <Transaction>2013/11/11 17:27:11.000.526,=D:\Delphi\EasyProp-PropertiesFile4Delphi\unittest\Unit1.pas</Transaction>
+    <Transaction>2013/11/11 17:27:34.000.120,D:\Delphi\EasyProp-PropertiesFile4Delphi\unittest\Unit1.pas=D:\Delphi\EasyProp-PropertiesFile4Delphi\src\EasyProp.PropertiesFile.Impl.pas</Transaction>
+    <Transaction>2013/11/11 17:32:52.000.419,=D:\Delphi\EasyProp-PropertiesFile4Delphi\unittest\Unit1.pas</Transaction>
+    <Transaction>2013/11/11 17:33:57.000.978,D:\Delphi\EasyProp-PropertiesFile4Delphi\unittest\Unit1.pas=D:\Delphi\EasyProp-PropertiesFile4Delphi\unittest\Test.EasyProp.PropertiesFile.pas</Transaction>
+    <Transaction>2013/11/11 17:38:35.000.216,=D:\Delphi\EasyProp-PropertiesFile4Delphi\unittest\Unit1.pas</Transaction>
+    <Transaction>2013/11/11 17:38:46.000.738,D:\Delphi\EasyProp-PropertiesFile4Delphi\unittest\Unit1.pas=D:\Delphi\EasyProp-PropertiesFile4Delphi\src\EasyProp.PropertiesFile.Module.Register.pas</Transaction>
+    <Transaction>2013/11/11 23:44:35.058,D:\Desenvolvimento\Delphi\Workspace\PropertiesFile4Delphi\unittest\PropertiesFile4D.Tests.dproj=D:\Desenvolvimento\Delphi\Workspace\PropertiesFile4Delphi\unittest\TestEasyProp.dproj</Transaction>
+    <Transaction>2013/11/11 23:44:57.011,D:\Desenvolvimento\Delphi\Workspace\PropertiesFile4Delphi\unittest\PropertiesFile4D.UnitTest.pas=D:\Desenvolvimento\Delphi\Workspace\PropertiesFile4Delphi\unittest\Test.EasyProp.PropertiesFile.pas</Transaction>
+    <Transaction>2013/11/11 23:45:14.261,D:\Desenvolvimento\Delphi\Workspace\PropertiesFile4Delphi\src\PropertiesFile4D.Impl.pas=D:\Desenvolvimento\Delphi\Workspace\PropertiesFile4Delphi\src\EasyProp.PropertiesFile.Impl.pas</Transaction>
+    <Transaction>2013/11/11 23:45:22.980,D:\Desenvolvimento\Delphi\Workspace\PropertiesFile4Delphi\src\PropertiesFile4D.Module.Register.pas=D:\Desenvolvimento\Delphi\Workspace\PropertiesFile4Delphi\src\EasyProp.PropertiesFile.Module.Register.pas</Transaction>
+    <Transaction>2013/11/11 23:45:32.371,D:\Desenvolvimento\Delphi\Workspace\PropertiesFile4Delphi\src\PropertiesFile4D.pas=D:\Desenvolvimento\Delphi\Workspace\PropertiesFile4Delphi\src\EasyProp.PropertiesFile.pas</Transaction>
+  </Transactions>
+</BorlandProject>
