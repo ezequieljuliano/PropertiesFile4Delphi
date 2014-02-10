@@ -4,3 +4,8 @@
 /unittest/Win32/Release
 
 /unittest/__history
+
+/unittest/Win32/Debug/*.exe
+/unittest/Win32/Debug/dcu/*.dcu
+/unittest/Win32/Debug/dunit.ini
+/unittest/Win32/Debug/file.infra
