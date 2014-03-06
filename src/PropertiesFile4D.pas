@@ -41,22 +41,30 @@ type
     property PropertyItem[const pName: string]: string read GetPropertyItem write SetPropertyItem;
   end;
 
-  TPropertiesFileManager = class
+  TPropertiesFileFactory = class sealed
+  private
+  {$HINTS OFF}
+    constructor Create();
+  {$HINTS ON}
   public
-    class function Produce(): IPropertiesFile; static;
+    class function GetInstance(): IPropertiesFile; static;
   end;
 
 implementation
 
 uses
-  Spring,
-  Spring.Services;
+  PropertiesFile4D.Impl;
 
 { TPropertiesFileManager }
 
-class function TPropertiesFileManager.Produce: IPropertiesFile;
+constructor TPropertiesFileFactory.Create;
 begin
-  Result := ServiceLocator.GetService<IPropertiesFile>;
+  raise EPropertiesFileException.Create('Method not used!');
+end;
+
+class function TPropertiesFileFactory.GetInstance: IPropertiesFile;
+begin
+  Result := TPropertiesFile.Create;
 end;
 
 end.

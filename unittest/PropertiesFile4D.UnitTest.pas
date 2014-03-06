@@ -44,7 +44,7 @@ implementation
 procedure TTestPropertiesFile.SetUp;
 begin
   inherited;
-  FFile := TPropertiesFileManager.Produce;
+  FFile := TPropertiesFileFactory.GetInstance;
 end;
 
 procedure TTestPropertiesFile.TearDown;

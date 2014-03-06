@@ -54,7 +54,7 @@
         <Manifest_File>None</Manifest_File>
         <DCC_Namespace>System;Xml;Data;Datasnap;Web;Soap;Vcl;Vcl.Imaging;Vcl.Touch;Vcl.Samples;Vcl.Shell;$(DCC_Namespace)</DCC_Namespace>
         <VerInfo_Locale>1046</VerInfo_Locale>
-        <DCC_UnitSearchPath>$(BDS)\Source\DUnit\src;..\dependencies\Spring4D\Source\Base;..\dependencies\Spring4D\Source\Base\Collections;..\dependencies\Spring4D\Source\Base\Reflection;..\dependencies\Spring4D\Source\Core\Container;..\dependencies\Spring4D\Source\Core\Services;..\dependencies\Spring4D\Source\Extensions\Cryptography;..\dependencies\Spring4D\Source\Extensions\Utils;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
+        <DCC_UnitSearchPath>$(BDS)\Source\DUnit\src;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
         <VerInfo_Keys>CompanyName=;FileDescription=;FileVersion=1.0.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=;ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
         <DCC_Define>_CONSOLE_TESTRUNNER;$(DCC_Define)</DCC_Define>
         <DCC_DcpOutput>.\$(Platform)\$(Config)\dcp</DCC_DcpOutput>
@@ -107,7 +107,6 @@
         <DCCReference Include="..\src\PropertiesFile4D.pas"/>
         <DCCReference Include="..\src\PropertiesFile4D.Impl.pas"/>
         <DCCReference Include="PropertiesFile4D.UnitTest.pas"/>
-        <DCCReference Include="..\src\PropertiesFile4D.Module.Register.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>
