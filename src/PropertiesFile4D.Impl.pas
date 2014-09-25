@@ -30,6 +30,9 @@ type
 
 implementation
 
+uses
+  System.StrUtils;
+
 { TPropertiesFile }
 
 constructor TPropertiesFile.Create;
@@ -49,8 +52,20 @@ begin
 end;
 
 function TPropertiesFile.GetPropertyItem(const pName: string): string;
+var
+  vIndex: Integer;
+  I: Integer;
 begin
-  Result := FProperties.Values[pName]
+  Result := FProperties.Values[pName];
+
+  vIndex := FProperties.IndexOfName(pName);
+  Inc(vIndex);
+
+  for I := vIndex to Pred(FProperties.Count) do
+    if AnsiContainsStr(FProperties[I], '=') then
+      Exit(Result)
+    else
+      Result := Result + sLineBreak + FProperties[I];
 end;
 
 procedure TPropertiesFile.LoadFromFile(const pFileName: string);

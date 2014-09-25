@@ -1,7 +1,7 @@
 ﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
     <PropertyGroup>
         <ProjectGuid>{45B17C1D-286C-4A90-9DB4-072416FFEBC2}</ProjectGuid>
-        <ProjectVersion>15.1</ProjectVersion>
+        <ProjectVersion>15.4</ProjectVersion>
         <FrameworkType>None</FrameworkType>
         <Base>True</Base>
         <Config Condition="'$(Config)'==''">Debug</Config>
@@ -11,11 +11,6 @@
         <MainSource>PropertiesFile4DTests.dpr</MainSource>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Config)'=='Base' or '$(Base)'!=''">
-        <Base>true</Base>
-    </PropertyGroup>
-    <PropertyGroup Condition="('$(Platform)'=='OSX32' and '$(Base)'=='true') or '$(Base_OSX32)'!=''">
-        <Base_OSX32>true</Base_OSX32>
-        <CfgParent>Base</CfgParent>
         <Base>true</Base>
     </PropertyGroup>
     <PropertyGroup Condition="('$(Platform)'=='Win32' and '$(Base)'=='true') or '$(Base_Win32)'!=''">
@@ -44,13 +39,8 @@
         <CfgParent>Base</CfgParent>
         <Base>true</Base>
     </PropertyGroup>
-    <PropertyGroup Condition="('$(Platform)'=='OSX32' and '$(Cfg_2)'=='true') or '$(Cfg_2_OSX32)'!=''">
-        <Cfg_2_OSX32>true</Cfg_2_OSX32>
-        <CfgParent>Cfg_2</CfgParent>
-        <Cfg_2>true</Cfg_2>
-        <Base>true</Base>
-    </PropertyGroup>
     <PropertyGroup Condition="'$(Base)'!=''">
+        <SanitizedProjectName>PropertiesFile4DTests</SanitizedProjectName>
         <Manifest_File>None</Manifest_File>
         <DCC_Namespace>System;Xml;Data;Datasnap;Web;Soap;Vcl;Vcl.Imaging;Vcl.Touch;Vcl.Samples;Vcl.Shell;$(DCC_Namespace)</DCC_Namespace>
         <VerInfo_Locale>1046</VerInfo_Locale>
@@ -66,10 +56,6 @@
         <DCC_S>false</DCC_S>
         <DCC_F>false</DCC_F>
         <DCC_K>false</DCC_K>
-    </PropertyGroup>
-    <PropertyGroup Condition="'$(Base_OSX32)'!=''">
-        <DCC_UsePackage>DBXInterBaseDriver;DataSnapServer;DataSnapCommon;DbxCommonDriver;dbxcds;CustomIPTransport;dsnap;IndyIPServer;IndyCore;CloudService;FmxTeeUI;bindcompfmx;dbrtl;bindcomp;inetdb;xmlrtl;ibxpress;bindengine;soaprtl;FMXTee;DBXInformixDriver;DBXFirebirdDriver;inet;DBXSybaseASADriver;dbexpress;IndyIPClient;DBXSqliteDriver;fmx;IndySystem;DataSnapClient;DataSnapProviderClient;DBXOracleDriver;fmxase;IndyIPCommon;inetdbxpress;rtl;DbxClientDriver;IndyProtocols;DBXMySQLDriver;bindcompdbx;fmxobj;fmxdae;DataSnapIndy10ServerTransport;$(DCC_UsePackage)</DCC_UsePackage>
-        <Icns_MainIcns>$(BDS)\bin\delphi_PROJECTICNS.icns</Icns_MainIcns>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Base_Win32)'!=''">
         <DCC_UsePackage>cxPivotGridChartRS17;JvGlobus;myprovider170;JvMM;dxSkinSevenRS17;dxSkinBlueprintRS17;JvManagedThreads;dxSkinHighContrastRS17;dxSkinOffice2007BlackRS17;dxCoreRS17;dac170;cxPageControldxBarPopupMenuRS17;dxSkinXmas2008BlueRS17;dxPSDBTeeChartRS17;rbADO1417;JvCrypt;dxPSTeeChartRS17;dxSkinSummer2008RS17;dxPScxSchedulerLnkRS17;dxSkinBlueRS17;dxSkinDarkRoomRS17;PkgMsysDatasnap;DBXInterBaseDriver;DataSnapServer;DataSnapCommon;dxPScxTLLnkRS17;PkgMsysUniDAC;JvNet;officeXPrt;JvDotNetCtrls;dxRibbonRS17;DbxCommonDriver;cxDataRS17;vclimg;dxSkinsdxBarPainterRS17;dxPSdxDBTVLnkRS17;dbxcds;DatasnapConnectorsFreePascal;dxSkinMoneyTwinsRS17;JvXPCtrls;vcldb;cxExportRS17;ibprovider170;dxPSCoreRS17;dxBarExtItemsRS17;PkgMsysDBEditors;dxGDIPlusRS17;dxNavBarRS17;CustomIPTransport;cxLibraryRS17;cxGridRS17;dxSkinOffice2010BlackRS17;dsnap;IndyIPServer;ACBr_MDFe;unidac170;IndyCore;PkgMsysACBr;dxSkinMcSkinRS17;CloudService;dxPScxCommonRS17;FmxTeeUI;frxDB17;dxSkinsdxDLPainterRS17;dxSkiniMaginaryRS17;ACBr_NFe2;ACBr_SAT;rbRAP1417;JvDB;JvRuntimeDesign;oraprovider170;dxPScxVGridLnkRS17;JclDeveloperTools;rbDBE1417;unidacfmx170;gaSQLParser;dxSkinSevenClassicRS17;dxPScxExtCommonRS17;rbUSER1417;dxPScxSSLnkRS17;dxSkinLilianRS17;fs17;dxPSdxLCLnkRS17;dxSkinOffice2010BlueRS17;bindcompfmx;dxSkinOffice2010SilverRS17;ACBr_PAF;vcldbx;PkgMsysDataAccess;cxSchedulerGridRS17;dbrtl;bindcomp;inetdb;JvPluginSystem;dxBarRS17;dclRBE1417;DBXOdbcDriver;dxBarDBNavRS17;JvCmp;dxSkinWhiteprintRS17;JvTimeFramework;xmlrtl;dxSkinsdxRibbonPainterRS17;ibxpress;rbIDE1417;rbDB1417;dxDockingRS17;vclactnband;bindengine;soaprtl;FMXTee;dxADOServerModeRS17;ACBrComum;bindcompvcl;rbDIDE1417;dxBarExtDBItemsRS17;Jcl;vclie;dxPSPrVwRibbonRS17;dxSkinOffice2007PinkRS17;synapse;cxPageControlRS17;rbTCUI1417;dxSkinscxPCPainterRS17;ACBr_TEFD;dxmdsRS17;dxSkinTheAsphaltWorldRS17;DBXInformixDriver;Intraweb;dxPsPrVwAdvRS17;dxSkinSilverRS17;dxdborRS17;dsnapcon;DBXFirebirdDriver;PCN2;inet;fsDB17;JvPascalInterpreter;vclx;dxSkinStardustRS17;cxEditorsRS17;DBXSybaseASADriver;rbRIDE1417;crcontrols170;dbexpress;JvBDE;IndyIPClient;ACBr_Convenio115;cxTreeListdxBarPopupMenuRS17;dxSkinVS2010RS17;rbRCL1417;ZComponent;dxThemeRS17;DBXSqliteDriver;ACBrDiversos;ACBrTCP;dxPScxGridLnkRS17;fmx;JvDlgs;IndySystem;TeeDB;dxSkinValentineRS17;vclib;inetdbbde;DataSnapClient;dxSkinDevExpressStyleRS17;dbfprovider170;DataSnapProviderClient;DBXSybaseASEDriver;cxBarEditItemRS17;dxServerModeRS17;cxPivotGridOLAPRS17;cxSchedulerRS17;MetropolisUILiveTile;dxSkinPumpkinRS17;dxPSLnksRS17;dxPSdxDBOCLnkRS17;cxVerticalGridRS17;rbTC1417;dxSkinSpringTimeRS17;vcldsnap;dacvcl170;dxSkinDevExpressDarkStyleRS17;DBXDb2Driver;rbCIDE1417;DBXOracleDriver;dxSkinLiquidSkyRS17;JvCore;db2provider170;vclribbon;ACBr_SPED;cxSpreadSheetRS17;PkgMsysStandard;PkgMsysExpress;fmxase;vcl;msprovider170;dxSkinOffice2007SilverRS17;IndyIPCommon;DBXMSSQLDriver;CodeSiteExpressPkg;dxPSdxOCLnkRS17;dcldxSkinsCoreRS17;ACBr_Boleto;PkgMsysDialogs;ACBr_Sintegra;JvAppFrm;inetdbxpress;webdsnap;rbIBE1417;ACBr_NFSe;ACBr_LFD;rbBDE1417;dxSkinCoffeeRS17;JvDocking;adortl;dxSkinscxSchedulerPainterRS17;dclRBDBE1417;JvWizards;frx17;JvHMI;dxtrmdRS17;PkgMsysSQLParser;dxPScxPCProdRS17;ACBrOpenSSL;JvBands;ACBrCapicom;ACBr_BoletoFC_FR;dclRBIBE1417;ZDbc;rtl;ACBrSerial;DbxClientDriver;rbDBDE1417;dxTabbedMDIRS17;dxSkinSharpPlusRS17;dxComnRS17;odbcprovider170;dxSkinsCoreRS17;dxSkinLondonLiquidSkyRS17;dxdbtrRS17;Tee;JclContainers;liteprovider170;ACBr_CTe;ZPlain;JvSystem;dxorgcRS17;svnui;dxSkinBlackRS17;PkgMsysEditors;JvControls;IndyProtocols;DBXMySQLDriver;dxLayoutControlRS17;bindcompdbx;TeeUI;JvJans;JvPrintPreview;JvPageComps;JvStdCtrls;JvCustom;dxSkinOffice2007BlueRS17;dxPScxPivotGridLnkRS17;PkgMsysJEDI;dxSpellCheckerRS17;ZCore;vcltouch;dxSkinOffice2007GreenRS17;dxSkinSharpRS17;websnap;dclRBBDE1417;dxSkinFoggyRS17;dxTileControlRS17;rbDAD1417;ACBrNFSeDanfseFRpkg;pgprovider170;VclSmp;dxSkinDarkSideRS17;adsprovider170;cxPivotGridRS17;PkgMsysGrids;PkgMsysBars;DataSnapConnectors;ACBrNFeDanfeFRpkg;dacfmx170;fmxobj;cxTreeListRS17;JclVcl;dxPSdxFCLnkRS17;dxSkinGlassOceansRS17;rbUSERDesign1417;unidacvcl170;frxe17;accessprovider170;dclRBADO1417;svn;dxFlowChartRS17;aseprovider170;fmxdae;ZParseSql;dxSkinsdxNavBarPainterRS17;bdertl;ACBrCTeDacteFRpkg;DataSnapIndy10ServerTransport;dxDBXServerModeRS17;dxSkinCaramelRS17;$(DCC_UsePackage)</DCC_UsePackage>
@@ -96,9 +82,6 @@
         <DCC_Define>RELEASE;$(DCC_Define)</DCC_Define>
         <DCC_SymbolReferenceInfo>0</DCC_SymbolReferenceInfo>
         <DCC_DebugInformation>0</DCC_DebugInformation>
-    </PropertyGroup>
-    <PropertyGroup Condition="'$(Cfg_2_OSX32)'!=''">
-        <Icns_MainIcns>$(BDS)\bin\delphi_PROJECTICNS.icns</Icns_MainIcns>
     </PropertyGroup>
     <ItemGroup>
         <DelphiCompile Include="$(MainSource)">
@@ -169,7 +152,6 @@
             </Delphi.Personality>
             <Deployment/>
             <Platforms>
-                <Platform value="OSX32">False</Platform>
                 <Platform value="Win32">True</Platform>
                 <Platform value="Win64">False</Platform>
             </Platforms>
