@@ -52,6 +52,17 @@ begin
 end;
 
 function TPropertiesFile.GetPropertyItem(const pName: string): string;
+
+  function ContainsComment(const pText: string): Boolean;
+  begin
+    Result := Copy(pText, 0, 2) = '//';
+  end;
+
+  function IsContinued(const pText: string): Boolean;
+  begin
+    Result := Copy(pText, 0, 1) = ' ';
+  end;
+
 var
   vIndex: Integer;
   I: Integer;
@@ -63,7 +74,7 @@ begin
 
   for I := vIndex to Pred(FProperties.Count) do
   begin
-    if not FProperties.Names[I].IsEmpty then
+    if (ContainsComment(FProperties[I])) or (not IsContinued(FProperties[I])) then
       Exit(Result)
     else
       Result := Result + sLineBreak + FProperties[I];
