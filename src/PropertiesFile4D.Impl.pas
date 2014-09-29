@@ -52,6 +52,17 @@ begin
 end;
 
 function TPropertiesFile.GetPropertyItem(const pName: string): string;
+
+  function ContainsComment(const pText: string): Boolean;
+  begin
+    Result := (Copy(pText, 0, 2) = '//');
+  end;
+
+  function ContainsSeparate(const pText: string): Boolean;
+  begin
+    Result := AnsiContainsStr(pText, '=');
+  end;
+
 var
   vIndex: Integer;
   I: Integer;
@@ -62,7 +73,7 @@ begin
   Inc(vIndex);
 
   for I := vIndex to Pred(FProperties.Count) do
-    if AnsiContainsStr(FProperties[I], '=') then
+    if (ContainsComment(FProperties[I])) or (ContainsSeparate(FProperties[I])) then
       Exit(Result)
     else
       Result := Result + sLineBreak + FProperties[I];
