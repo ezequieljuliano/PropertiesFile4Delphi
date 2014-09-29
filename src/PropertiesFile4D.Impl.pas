@@ -55,12 +55,12 @@ function TPropertiesFile.GetPropertyItem(const pName: string): string;
 
   function ContainsComment(const pText: string): Boolean;
   begin
-    Result := Copy(pText, 0, 2) = '//';
+    Result := Copy(Trim(pText), 0, 2) = '//';
   end;
 
   function IsContinued(const pText: string): Boolean;
   begin
-    Result := Copy(pText, 0, 1) = ' ';
+    Result := Copy(Trim(pText), 0, 1) = '&';
   end;
 
 var
@@ -77,7 +77,7 @@ begin
     if (ContainsComment(FProperties[I])) or (not IsContinued(FProperties[I])) then
       Exit(Result)
     else
-      Result := Result + sLineBreak + FProperties[I];
+      Result := Result + sLineBreak + Copy(FProperties[I], Pos('&', FProperties[I]) + 1, Length(FProperties[I]));
   end;
 end;
 
