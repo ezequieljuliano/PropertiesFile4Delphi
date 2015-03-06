@@ -46,7 +46,7 @@ type
 
   TMappedPropertiesFile = class
   strict private
-    [Ignore]
+  [Ignore]
     FPropFile: IPropertiesFile;
     [Ignore]
     FRttiCtx: TRttiContext;
@@ -165,6 +165,7 @@ procedure TMappedPropertiesFile.Load;
 var
   vField: TRttiField;
   vFieldName: string;
+  vEnumValue: TValue;
 begin
   SetFileNameAndPrefix();
 
@@ -200,6 +201,16 @@ begin
           begin
             if not FPropFile.PropertyItem[vFieldName].IsEmpty then
               vField.SetValue(Self, StrToFloatDef(FPropFile.PropertyItem[vFieldName], 0));
+            FFieldList.AddOrSetValue(vFieldName, vField);
+          end;
+        tkEnumeration:
+          begin
+            if not FPropFile.PropertyItem[vFieldName].IsEmpty then
+            begin
+              vEnumValue := vField.GetValue(Self);
+              vEnumValue := TValue.FromOrdinal(vEnumValue.TypeInfo, GetEnumValue(vEnumValue.TypeInfo, FPropFile.PropertyItem[vFieldName]));
+              vField.SetValue(Self, vEnumValue);
+            end;
             FFieldList.AddOrSetValue(vFieldName, vField);
           end;
       end;
