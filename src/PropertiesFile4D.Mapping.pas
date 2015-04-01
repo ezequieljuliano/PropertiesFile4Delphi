@@ -46,7 +46,7 @@ type
 
   TMappedPropertiesFile = class
   strict private
-  [Ignore]
+    [Ignore]
     FPropFile: IPropertiesFile;
     [Ignore]
     FRttiCtx: TRttiContext;
@@ -224,7 +224,7 @@ begin
   for vAttr in FRttiType.GetAttributes() do
     if vAttr is PropertiesFileAttribute then
     begin
-      FFileName := PropertiesFileAttribute(vAttr).FileName;
+      FFileName := ExtractFilePath(ParamStr(0)) + PropertiesFileAttribute(vAttr).FileName;
       FPrefix := PropertiesFileAttribute(vAttr).Prefix;
       Break;
     end;
