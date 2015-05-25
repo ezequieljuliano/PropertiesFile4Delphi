@@ -40,6 +40,7 @@
         <Base>true</Base>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Base)'!=''">
+        <SanitizedProjectName>PropertiesFile4DTestsMapping</SanitizedProjectName>
         <DCC_UnitSearchPath>$(BDS)\Source\DUnit\src;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
         <DCC_DcpOutput>.\$(Platform)\$(Config)\dcp</DCC_DcpOutput>
         <VerInfo_Locale>1046</VerInfo_Locale>
@@ -89,7 +90,6 @@
             <MainSource>MainSource</MainSource>
         </DelphiCompile>
         <DCCReference Include="PropertiesFile4D.UnitTest.Mapping.pas"/>
-        <DCCReference Include="..\src\PropertiesFile4D.Impl.pas"/>
         <DCCReference Include="..\src\PropertiesFile4D.pas"/>
         <DCCReference Include="..\src\PropertiesFile4D.Mapping.pas"/>
         <BuildConfiguration Include="Release">
@@ -125,6 +125,8 @@
             <UnitTesting>
                 <TestFramework>DUnit / Delphi Win32</TestFramework>
                 <TestRunner>GUI</TestRunner>
+                <TestProjectName/>
+                <SourceProjectName/>
             </UnitTesting>
         </BorlandProject>
         <ProjectFileVersion>12</ProjectFileVersion>

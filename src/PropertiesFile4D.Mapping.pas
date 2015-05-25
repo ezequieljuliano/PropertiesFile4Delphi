@@ -46,7 +46,7 @@ type
 
   TMappedPropertiesFile = class
   strict private
-    [Ignore]
+  [Ignore]
     FPropFile: IPropertiesFile;
     [Ignore]
     FRttiCtx: TRttiContext;
@@ -206,11 +206,12 @@ begin
         tkEnumeration:
           begin
             if not FPropFile.PropertyItem[vFieldName].IsEmpty then
-            begin
-              vEnumValue := vField.GetValue(Self);
-              vEnumValue := TValue.FromOrdinal(vEnumValue.TypeInfo, GetEnumValue(vEnumValue.TypeInfo, FPropFile.PropertyItem[vFieldName]));
-              vField.SetValue(Self, vEnumValue);
-            end;
+              if not vField.FieldType.Name.Equals('Boolean') then
+              begin
+                vEnumValue := vField.GetValue(Self);
+                vEnumValue := TValue.FromOrdinal(vEnumValue.TypeInfo, GetEnumValue(vEnumValue.TypeInfo, FPropFile.PropertyItem[vFieldName]));
+                vField.SetValue(Self, vEnumValue);
+              end;
             FFieldList.AddOrSetValue(vFieldName, vField);
           end;
       end;
