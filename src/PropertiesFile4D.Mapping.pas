@@ -46,7 +46,7 @@ type
 
   TMappedPropertiesFile = class
   strict private
-  [Ignore]
+    [Ignore]
     FPropFile: IPropertiesFile;
     [Ignore]
     FRttiCtx: TRttiContext;
@@ -68,6 +68,9 @@ type
   public
     procedure AfterConstruction; override;
     procedure BeforeDestruction; override;
+
+    procedure Reload();
+    procedure Save();
   end;
 
 implementation
@@ -216,6 +219,18 @@ begin
           end;
       end;
     end;
+end;
+
+procedure TMappedPropertiesFile.Reload;
+begin
+  Load();
+end;
+
+procedure TMappedPropertiesFile.Save;
+begin
+  if IsReadOnly() then
+    raise EPropertyItemIsNull.Create('The class properties are read-only impossible to save!');
+  Unload();
 end;
 
 procedure TMappedPropertiesFile.SetFileNameAndPrefix;

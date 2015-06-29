@@ -15,8 +15,8 @@ type
   [ReadOnly]
   TConfigFilePrefixReadOnly = class(TMappedPropertiesFile)
   strict private
-    [PropertyItem('Cod')]
-    [NotNull]
+  [PropertyItem('Cod')]
+  [NotNull]
     FCod: Integer;
     [PropertyItem('Name')]
     [NotNull]
@@ -44,8 +44,8 @@ type
   [ReadOnly]
   TConfigFileReadOnly = class(TMappedPropertiesFile)
   strict private
-    [PropertyItem('Cod')]
-    [NotNull]
+  [PropertyItem('Cod')]
+  [NotNull]
     FCod: Integer;
     [PropertyItem('Name')]
     [NotNull]
@@ -72,8 +72,8 @@ type
   [PropertiesFile('ConfigFile.properties')]
   TConfigFile= class(TMappedPropertiesFile)
   strict private
-    [PropertyItem('Cod')]
-    [NotNull]
+  [PropertyItem('Cod')]
+  [NotNull]
     FCod: Integer;
     [PropertyItem('Name')]
     [NotNull]
@@ -143,8 +143,45 @@ end;
 
 procedure TTestPropertiesFileMapping.TestConfigFile;
 var
-  vConfig: TConfigFile;
+  vConfig, vConfig2: TConfigFile;
 begin
+  vConfig := TConfigFile.Create;
+  try
+    vConfig.Cod := 1;
+    vConfig.Name := 'Test';
+    vConfig.Value := 100;
+    vConfig.Date := '21/01/2015';
+    vConfig.Valid := True;
+  finally
+    FreeAndNil(vConfig);
+  end;
+
+  CheckTrue(FileExists('ConfigFile.properties'));
+
+  vConfig := TConfigFile.Create;
+  vConfig2 := TConfigFile.Create;
+  try
+    vConfig.Cod := 1;
+    vConfig.Name := 'Test';
+    vConfig.Value := 100;
+    vConfig.Date := '21/01/2015';
+    vConfig.Valid := True;
+
+    vConfig.Save;
+
+    vConfig2.Reload;
+
+    CheckTrue(vConfig2.Cod = 1);
+    CheckTrue(vConfig2.Name = 'Test');
+    CheckTrue(vConfig2.Value = 100);
+    CheckTrue(vConfig2.Date = '21/01/2015');
+    CheckTrue(vConfig2.Valid = False);
+    CheckTrue(vConfig2.Transient = 'Transient');
+  finally
+    FreeAndNil(vConfig);
+    FreeAndNil(vConfig2);
+  end;
+
   vConfig := TConfigFile.Create;
   try
     vConfig.Cod := 1;
