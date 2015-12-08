@@ -2,12 +2,22 @@ unit PropertiesFile4D.Mapping;
 
 interface
 
+{$INCLUDE PropertiesFile4D.inc}
+
 uses
+  {$IFDEF USE_SYSTEM_NAMESPACE}
   System.Classes,
   System.SysUtils,
   System.Rtti,
   System.TypInfo,
   System.Generics.Collections,
+  {$ELSE USE_SYSTEM_NAMESPACE}
+  Classes,
+  SysUtils,
+  Rtti,
+  TypInfo,
+  Generics.Collections,
+  {$ENDIF USE_SYSTEM_NAMESPACE}
   PropertiesFile4D;
 
 type
@@ -75,6 +85,24 @@ type
 
 implementation
 
+function isEmpty(const pString: string): Boolean;
+begin
+  {$IFDEF USE_STRING_CLASS}
+  Result := pString.isEmpty;
+  {$ELSE USE_STRING_CLASS}
+  Result := pString = '';
+  {$ENDIF USE_STRING_CLASS}
+end;
+
+function isEquals(const pString1, pString2: string): Boolean;
+begin
+  {$IFDEF USE_STRING_CLASS}
+  Result := pString1.Equals(pString2);
+  {$ELSE USE_STRING_CLASS}
+  Result := pString1 = pString2;
+  {$ENDIF USE_STRING_CLASS}
+end;
+
 { ConfigurationAttribute }
 
 constructor PropertiesFileAttribute.Create(const pFileName: string; const pPrefix: string = '');
@@ -120,15 +148,15 @@ begin
   for vAttr in pField.GetAttributes() do
     if (vAttr is PropertyItemAttribute) then
     begin
-      if not PropertyItemAttribute(vAttr).Name.IsEmpty then
-        if FPrefix.IsEmpty then
+      if not isEmpty(PropertyItemAttribute(vAttr).Name) then
+        if isEmpty(FPrefix) then
           Result := PropertyItemAttribute(vAttr).Name
         else
           Result := FPrefix + '.' + PropertyItemAttribute(vAttr).Name;
       Break;
     end;
-  if Result.IsEmpty then
-    if FPrefix.IsEmpty then
+  if isEmpty(Result) then
+    if isEmpty(FPrefix) then
       Result := pField.Name
     else
       Result := FPrefix + '.' + pField.Name;
@@ -172,7 +200,7 @@ var
 begin
   SetFileNameAndPrefix();
 
-  if FFileName.IsEmpty then
+  if isEmpty(FFileName) then
     raise EPropertiesFileException.Create('FileName of ' + Self.ClassName + ' not defined!');
 
   if FileExists(FFileName) then
@@ -184,32 +212,32 @@ begin
       vFieldName := GetFieldName(vField);
 
       if IsReadOnly() and IsNotNullField(vField) then
-        if FPropFile.PropertyItem[vFieldName].IsEmpty then
+        if isEmpty(FPropFile.PropertyItem[vFieldName]) then
           raise EPropertyItemIsNull.Create('Property Item ' + vFieldName + ' is null!');
 
       case vField.FieldType.TypeKind of
         tkUnknown, tkChar, tkString, tkWChar, tkLString, tkWString, tkUString:
           begin
-            if not FPropFile.PropertyItem[vFieldName].IsEmpty then
+            if not isEmpty(FPropFile.PropertyItem[vFieldName]) then
               vField.SetValue(Self, FPropFile.PropertyItem[vFieldName]);
             FFieldList.AddOrSetValue(vFieldName, vField);
           end;
         tkInteger, tkInt64:
           begin
-            if not FPropFile.PropertyItem[vFieldName].IsEmpty then
+            if not isEmpty(FPropFile.PropertyItem[vFieldName]) then
               vField.SetValue(Self, StrToIntDef(FPropFile.PropertyItem[vFieldName], 0));
             FFieldList.AddOrSetValue(vFieldName, vField);
           end;
         tkFloat:
           begin
-            if not FPropFile.PropertyItem[vFieldName].IsEmpty then
+            if not isEmpty(FPropFile.PropertyItem[vFieldName]) then
               vField.SetValue(Self, StrToFloatDef(FPropFile.PropertyItem[vFieldName], 0));
             FFieldList.AddOrSetValue(vFieldName, vField);
           end;
         tkEnumeration:
           begin
-            if not FPropFile.PropertyItem[vFieldName].IsEmpty then
-              if not vField.FieldType.Name.Equals('Boolean') then
+            if not isEmpty(FPropFile.PropertyItem[vFieldName]) then
+              if not isEquals(vField.FieldType.Name, 'Boolean') then
               begin
                 vEnumValue := vField.GetValue(Self);
                 vEnumValue := TValue.FromOrdinal(vEnumValue.TypeInfo, GetEnumValue(vEnumValue.TypeInfo, FPropFile.PropertyItem[vFieldName]));

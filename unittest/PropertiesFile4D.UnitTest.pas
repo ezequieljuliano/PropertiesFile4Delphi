@@ -2,10 +2,17 @@ unit PropertiesFile4D.UnitTest;
 
 interface
 
+{$INCLUDE ..\src\PropertiesFile4D.inc}
+
 uses
   TestFramework,
+  {$IFDEF USE_SYSTEM_NAMESPACE}
   System.Classes,
   System.SysUtils,
+  {$ELSE USE_SYSTEM_NAMESPACE}
+  Classes,
+  SysUtils,
+  {$ENDIF USE_SYSTEM_NAMESPACE}
   PropertiesFile4D;
 
 type

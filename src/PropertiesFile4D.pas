@@ -1,11 +1,20 @@
 unit PropertiesFile4D;
 
+{$INCLUDE PropertiesFile4D.inc}
+
 interface
 
+{$IFDEF USE_SYSTEM_NAMESPACE}
 uses
   System.Classes,
   System.SysUtils,
   System.StrUtils;
+{$ELSE USE_SYSTEM_NAMESPACE}
+uses
+  Classes,
+  SysUtils,
+  StrUtils;
+{$ENDIF USE_SYSTEM_NAMESPACE}
 
 type
 
