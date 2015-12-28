@@ -22,8 +22,8 @@ type
   [ReadOnly]
   TConfigFilePrefixReadOnly = class(TMappedPropertiesFile)
   strict private
-  [PropertyItem('Cod')]
-  [NotNull]
+    [PropertyItem('Cod')]
+    [NotNull]
     FCod: Integer;
     [PropertyItem('Name')]
     [NotNull]
@@ -51,8 +51,8 @@ type
   [ReadOnly]
   TConfigFileReadOnly = class(TMappedPropertiesFile)
   strict private
-  [PropertyItem('Cod')]
-  [NotNull]
+    [PropertyItem('Cod')]
+    [NotNull]
     FCod: Integer;
     [PropertyItem('Name')]
     [NotNull]
@@ -79,8 +79,8 @@ type
   [PropertiesFile('ConfigFile.properties')]
   TConfigFile= class(TMappedPropertiesFile)
   strict private
-  [PropertyItem('Cod')]
-  [NotNull]
+    [PropertyItem('Cod')]
+    [NotNull]
     FCod: Integer;
     [PropertyItem('Name')]
     [NotNull]
