@@ -9,6 +9,7 @@ del /f /q /s *.~*
 del /f /q /s *.local
 del /f /q /s *.identcache
 del /f /q /s *.tvsconfig
+del /f /q /s *.stat
 
 del /f /q /s *.bpl
 del /f /q /s *.cbk
