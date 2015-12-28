@@ -24,6 +24,10 @@ for /f "tokens=* delims=" %%i in ('dir /s /b /a:d __history') do (
   rd /s /q "%%i"
 )
 
+for /f "tokens=* delims=" %%i in ('dir /s /b /a:d __recovery') do (
+  rd /s /q "%%i"
+)
+
 for /f "tokens=* delims=" %%i in ('dir /s /b /a:d Win32') do (
   rd /s /q "%%i"
 )
