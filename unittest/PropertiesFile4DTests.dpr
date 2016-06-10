@@ -17,7 +17,8 @@ program PropertiesFile4DTests;
 uses
   DUnitTestRunner,
   PropertiesFile4D in '..\src\PropertiesFile4D.pas',
-  PropertiesFile4D.UnitTest in 'PropertiesFile4D.UnitTest.pas';
+  PropertiesFile4D.UnitTest in 'PropertiesFile4D.UnitTest.pas',
+  PropertiesFile4D.Impl in '..\src\PropertiesFile4D.Impl.pas';
 
 {$R *.RES}
 

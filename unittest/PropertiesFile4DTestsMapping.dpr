@@ -18,7 +18,8 @@ uses
   DUnitTestRunner,
   PropertiesFile4D.UnitTest.Mapping in 'PropertiesFile4D.UnitTest.Mapping.pas',
   PropertiesFile4D in '..\src\PropertiesFile4D.pas',
-  PropertiesFile4D.Mapping in '..\src\PropertiesFile4D.Mapping.pas';
+  PropertiesFile4D.Mapping in '..\src\PropertiesFile4D.Mapping.pas',
+  PropertiesFile4D.Impl in '..\src\PropertiesFile4D.Impl.pas';
 
 { R *.RES }
 

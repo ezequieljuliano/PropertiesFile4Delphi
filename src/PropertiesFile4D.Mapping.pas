@@ -5,117 +5,157 @@ interface
 {$INCLUDE PropertiesFile4D.inc}
 
 uses
+
   {$IFDEF USE_SYSTEM_NAMESPACE}
+
   System.Classes,
   System.SysUtils,
   System.Rtti,
   System.TypInfo,
   System.Generics.Collections,
+
   {$ELSE USE_SYSTEM_NAMESPACE}
+
   Classes,
   SysUtils,
   Rtti,
   TypInfo,
   Generics.Collections,
+
   {$ENDIF USE_SYSTEM_NAMESPACE}
-  PropertiesFile4D;
+
+  PropertiesFile4D,
+  PropertiesFile4D.Impl;
 
 type
 
   PropertiesFileAttribute = class(TCustomAttribute)
-  strict private
-    FFileName: string;
-    FPrefix: string;
+  private
+    fFileName: string;
+    fPrefix: string;
+  protected
+    { protected declarations }
   public
-    constructor Create(const pFileName: string; const pPrefix: string = '');
+    constructor Create(const fileName: string; const prefix: string = '');
 
-    property FileName: string read FFileName;
-    property Prefix: string read FPrefix;
+    property FileName: string read fFileName;
+    property Prefix: string read fPrefix;
   end;
 
   PropertyItemAttribute = class(TCustomAttribute)
-  strict private
-    FName: string;
+  private
+    fName: string;
+  protected
+    { protected declarations }
   public
-    constructor Create(const pName: string);
+    constructor Create(const name: string);
 
-    property Name: string read FName;
+    property Name: string read fName;
   end;
 
   NotNullAttribute = class(TCustomAttribute)
-
+  private
+    { private declarations }
+  protected
+    { protected declarations }
+  public
+    { public declarations }
   end;
 
   IgnoreAttribute = class(TCustomAttribute)
-
+  private
+    { private declarations }
+  protected
+    { protected declarations }
+  public
+    { public declarations }
   end;
 
   ReadOnlyAttribute = class(TCustomAttribute)
-
+  private
+    { private declarations }
+  protected
+    { protected declarations }
+  public
+    { public declarations }
   end;
 
   TMappedPropertiesFile = class
-  strict private
+  private
     [Ignore]
-    FPropFile: IPropertiesFile;
+    fPropFile: IPropertiesFile;
     [Ignore]
-    FRttiCtx: TRttiContext;
+    fRttiCtx: TRttiContext;
     [Ignore]
-    FRttiType: TRttiType;
+    fRttiType: TRttiType;
     [Ignore]
-    FFieldList: TDictionary<string, TRttiField>;
+    fFieldList: TDictionary<string, TRttiField>;
     [Ignore]
-    FFileName: string;
+    fFileName: string;
     [Ignore]
-    FPrefix: string;
-    procedure Load();
-    procedure Unload();
-    procedure SetFileNameAndPrefix();
-    function IsReadOnly(): Boolean;
-    function IsIgnoreField(const pField: TRttiField): Boolean;
-    function IsNotNullField(const pField: TRttiField): Boolean;
-    function GetFieldName(const pField: TRttiField): string;
+    fPrefix: string;
+    procedure Load;
+    procedure Unload;
+    procedure ConfigureFileNameAndPrefix;
+    function IsReadOnly: Boolean;
+    function IsIgnoreField(field: TRttiField): Boolean;
+    function IsNotNullField(field: TRttiField): Boolean;
+    function GetFieldName(field: TRttiField): string;
   public
     procedure AfterConstruction; override;
     procedure BeforeDestruction; override;
 
-    procedure Reload();
-    procedure Save();
+    procedure Reload;
+    procedure Save;
   end;
 
 implementation
 
-function isEmpty(const pString: string): Boolean;
+function IsEmpty(const value: string): Boolean;
 begin
+
   {$IFDEF USE_STRING_CLASS}
-  Result := pString.isEmpty;
+
+  Result := value.IsEmpty;
+
   {$ELSE USE_STRING_CLASS}
-  Result := pString = '';
+
+  Result := value = '';
+
   {$ENDIF USE_STRING_CLASS}
+
 end;
 
-function isEquals(const pString1, pString2: string): Boolean;
+function IsEquals(const leftValue, RightValue: string): Boolean;
 begin
+
   {$IFDEF USE_STRING_CLASS}
-  Result := pString1.Equals(pString2);
+
+  Result := leftValue.Equals(RightValue);
+
   {$ELSE USE_STRING_CLASS}
-  Result := pString1 = pString2;
+
+  Result := leftValue = RightValue;
+
   {$ENDIF USE_STRING_CLASS}
+
 end;
 
-{ ConfigurationAttribute }
+{ PropertiesFileAttribute }
 
-constructor PropertiesFileAttribute.Create(const pFileName: string; const pPrefix: string = '');
+constructor PropertiesFileAttribute.Create(const fileName: string; const prefix: string = '');
 begin
-  FFileName := pFileName;
-  FPrefix := pPrefix;
+  inherited Create;
+  fFileName := fileName;
+  fPrefix := prefix;
 end;
 
-{ NameAttribute }
+{ PropertyItemAttribute }
 
-constructor PropertyItemAttribute.Create(const pName: string);
+constructor PropertyItemAttribute.Create(const name: string);
 begin
-  FName := pName;
+  inherited Create;
+  fName := name;
 end;
 
 { TMappedPropertiesFile }
@@ -123,127 +163,127 @@ end;
 procedure TMappedPropertiesFile.AfterConstruction;
 begin
   inherited AfterConstruction;
-  FPropFile := TPropertiesFileFactory.Build();
-  FRttiCtx := TRttiContext.Create();
-  FRttiType := FRttiCtx.GetType(Self.ClassType);
-  FFieldList := TDictionary<string, TRttiField>.Create();
-  FFileName := EmptyStr;
-  FPrefix := EmptyStr;
-  Load();
+  fPropFile := TPropertiesFile.New;
+  fRttiCtx := TRttiContext.Create;
+  fRttiType := fRttiCtx.GetType(Self.ClassType);
+  fFieldList := TDictionary<string, TRttiField>.Create;
+  fFileName := EmptyStr;
+  fPrefix := EmptyStr;
+  Load;
 end;
 
 procedure TMappedPropertiesFile.BeforeDestruction;
 begin
-  Unload();
-  FreeAndNil(FFieldList);
-  FRttiCtx.Free;
+  Unload;
+  fFieldList.Free;
+  fRttiCtx.Free;
   inherited BeforeDestruction;
 end;
 
-function TMappedPropertiesFile.GetFieldName(const pField: TRttiField): string;
+function TMappedPropertiesFile.GetFieldName(field: TRttiField): string;
 var
-  vAttr: TCustomAttribute;
+  attr: TCustomAttribute;
 begin
   Result := EmptyStr;
-  for vAttr in pField.GetAttributes() do
-    if (vAttr is PropertyItemAttribute) then
+  for attr in field.GetAttributes do
+    if (attr is PropertyItemAttribute) then
     begin
-      if not isEmpty(PropertyItemAttribute(vAttr).Name) then
-        if isEmpty(FPrefix) then
-          Result := PropertyItemAttribute(vAttr).Name
+      if not IsEmpty(PropertyItemAttribute(attr).Name) then
+        if IsEmpty(fPrefix) then
+          Result := PropertyItemAttribute(attr).Name
         else
-          Result := FPrefix + '.' + PropertyItemAttribute(vAttr).Name;
+          Result := fPrefix + '.' + PropertyItemAttribute(attr).Name;
       Break;
     end;
-  if isEmpty(Result) then
-    if isEmpty(FPrefix) then
-      Result := pField.Name
+  if IsEmpty(Result) then
+    if IsEmpty(fPrefix) then
+      Result := field.Name
     else
-      Result := FPrefix + '.' + pField.Name;
+      Result := fPrefix + '.' + field.Name;
 end;
 
-function TMappedPropertiesFile.IsIgnoreField(const pField: TRttiField): Boolean;
+function TMappedPropertiesFile.IsIgnoreField(field: TRttiField): Boolean;
 var
-  vAttr: TCustomAttribute;
+  attr: TCustomAttribute;
 begin
   Result := False;
-  for vAttr in pField.GetAttributes() do
-    if (vAttr is IgnoreAttribute) then
+  for attr in field.GetAttributes do
+    if (attr is IgnoreAttribute) then
       Exit(True);
 end;
 
-function TMappedPropertiesFile.IsNotNullField(const pField: TRttiField): Boolean;
+function TMappedPropertiesFile.IsNotNullField(field: TRttiField): Boolean;
 var
-  vAttr: TCustomAttribute;
+  attr: TCustomAttribute;
 begin
   Result := False;
-  for vAttr in pField.GetAttributes() do
-    if (vAttr is NotNullAttribute) then
+  for attr in field.GetAttributes do
+    if (attr is NotNullAttribute) then
       Exit(True);
 end;
 
 function TMappedPropertiesFile.IsReadOnly: Boolean;
 var
-  vAttr: TCustomAttribute;
+  attr: TCustomAttribute;
 begin
   Result := False;
-  for vAttr in FRttiType.GetAttributes() do
-    if vAttr is ReadOnlyAttribute then
+  for attr in fRttiType.GetAttributes do
+    if attr is ReadOnlyAttribute then
       Exit(True);
 end;
 
 procedure TMappedPropertiesFile.Load;
 var
-  vField: TRttiField;
-  vFieldName: string;
-  vEnumValue: TValue;
+  field: TRttiField;
+  fieldName: string;
+  enumValue: TValue;
 begin
-  SetFileNameAndPrefix();
+  ConfigureFileNameAndPrefix;
 
-  if isEmpty(FFileName) then
+  if IsEmpty(fFileName) then
     raise EPropertiesFileException.Create('FileName of ' + Self.ClassName + ' not defined!');
 
-  if FileExists(FFileName) then
-    FPropFile.LoadFromFile(FFileName);
+  if FileExists(fFileName) then
+    fPropFile.LoadFromFile(fFileName);
 
-  for vField in FRttiType.GetFields do
-    if not IsIgnoreField(vField) then
+  for field in fRttiType.GetFields do
+    if not IsIgnoreField(field) then
     begin
-      vFieldName := GetFieldName(vField);
+      fieldName := GetFieldName(field);
 
-      if IsReadOnly() and IsNotNullField(vField) then
-        if isEmpty(FPropFile.PropertyItem[vFieldName]) then
-          raise EPropertyItemIsNull.Create('Property Item ' + vFieldName + ' is null!');
+      if IsReadOnly and IsNotNullField(field) then
+        if IsEmpty(fPropFile.PropertyItem[fieldName]) then
+          raise EPropertyItemIsNullException.Create('Property Item ' + fieldName + ' is null!');
 
-      case vField.FieldType.TypeKind of
+      case field.FieldType.TypeKind of
         tkUnknown, tkChar, tkString, tkWChar, tkLString, tkWString, tkUString:
           begin
-            if not isEmpty(FPropFile.PropertyItem[vFieldName]) then
-              vField.SetValue(Self, FPropFile.PropertyItem[vFieldName]);
-            FFieldList.AddOrSetValue(vFieldName, vField);
+            if not IsEmpty(fPropFile.PropertyItem[fieldName]) then
+              field.SetValue(Self, fPropFile.PropertyItem[fieldName]);
+            fFieldList.AddOrSetValue(fieldName, field);
           end;
         tkInteger, tkInt64:
           begin
-            if not isEmpty(FPropFile.PropertyItem[vFieldName]) then
-              vField.SetValue(Self, StrToIntDef(FPropFile.PropertyItem[vFieldName], 0));
-            FFieldList.AddOrSetValue(vFieldName, vField);
+            if not IsEmpty(fPropFile.PropertyItem[fieldName]) then
+              field.SetValue(Self, StrToIntDef(fPropFile.PropertyItem[fieldName], 0));
+            fFieldList.AddOrSetValue(fieldName, field);
           end;
         tkFloat:
           begin
-            if not isEmpty(FPropFile.PropertyItem[vFieldName]) then
-              vField.SetValue(Self, StrToFloatDef(FPropFile.PropertyItem[vFieldName], 0));
-            FFieldList.AddOrSetValue(vFieldName, vField);
+            if not IsEmpty(fPropFile.PropertyItem[fieldName]) then
+              field.SetValue(Self, StrToFloatDef(fPropFile.PropertyItem[fieldName], 0));
+            fFieldList.AddOrSetValue(fieldName, field);
           end;
         tkEnumeration:
           begin
-            if not isEmpty(FPropFile.PropertyItem[vFieldName]) then
-              if not isEquals(vField.FieldType.Name, 'Boolean') then
+            if not IsEmpty(fPropFile.PropertyItem[fieldName]) then
+              if not IsEquals(field.FieldType.Name, 'Boolean') then
               begin
-                vEnumValue := vField.GetValue(Self);
-                vEnumValue := TValue.FromOrdinal(vEnumValue.TypeInfo, GetEnumValue(vEnumValue.TypeInfo, FPropFile.PropertyItem[vFieldName]));
-                vField.SetValue(Self, vEnumValue);
+                enumValue := field.GetValue(Self);
+                enumValue := TValue.FromOrdinal(enumValue.TypeInfo, GetEnumValue(enumValue.TypeInfo, fPropFile.PropertyItem[fieldName]));
+                field.SetValue(Self, enumValue);
               end;
-            FFieldList.AddOrSetValue(vFieldName, vField);
+            fFieldList.AddOrSetValue(fieldName, field);
           end;
       end;
     end;
@@ -251,38 +291,38 @@ end;
 
 procedure TMappedPropertiesFile.Reload;
 begin
-  Load();
+  Load;
 end;
 
 procedure TMappedPropertiesFile.Save;
 begin
-  if IsReadOnly() then
-    raise EPropertyItemIsNull.Create('The class properties are read-only impossible to save!');
-  Unload();
+  if IsReadOnly then
+    raise EPropertyItemIsNullException.Create('The class properties are read-only impossible to save!');
+  Unload;
 end;
 
-procedure TMappedPropertiesFile.SetFileNameAndPrefix;
+procedure TMappedPropertiesFile.ConfigureFileNameAndPrefix;
 var
-  vAttr: TCustomAttribute;
+  attr: TCustomAttribute;
 begin
-  for vAttr in FRttiType.GetAttributes() do
-    if vAttr is PropertiesFileAttribute then
+  for attr in fRttiType.GetAttributes() do
+    if attr is PropertiesFileAttribute then
     begin
-      FFileName := ExtractFilePath(ParamStr(0)) + PropertiesFileAttribute(vAttr).FileName;
-      FPrefix := PropertiesFileAttribute(vAttr).Prefix;
+      fFileName := ExtractFilePath(ParamStr(0)) + PropertiesFileAttribute(attr).FileName;
+      fPrefix := PropertiesFileAttribute(attr).Prefix;
       Break;
     end;
 end;
 
 procedure TMappedPropertiesFile.Unload;
 var
-  vFld: TPair<string, TRttiField>;
+  field: TPair<string, TRttiField>;
 begin
-  if not IsReadOnly() then
+  if not IsReadOnly then
   begin
-    for vFld in FFieldList do
-      FPropFile.PropertyItem[vFld.Key] := vFld.Value.GetValue(Self).ToString;
-    FPropFile.SaveToFile(FFileName);
+    for field in fFieldList do
+      fPropFile.PropertyItem[field.Key] := field.Value.GetValue(Self).ToString;
+    fPropFile.SaveToFile(fFileName);
   end;
 end;
 

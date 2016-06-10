@@ -6,14 +6,21 @@ interface
 
 uses
   TestFramework,
+
   {$IFDEF USE_SYSTEM_NAMESPACE}
+
   System.Classes,
   System.SysUtils,
+
   {$ELSE USE_SYSTEM_NAMESPACE}
+
   Classes,
   SysUtils,
+
   {$ENDIF USE_SYSTEM_NAMESPACE}
+
   PropertiesFile4D.Mapping,
+  PropertiesFile4D.Impl,
   PropertiesFile4D;
 
 type
@@ -21,99 +28,114 @@ type
   [PropertiesFile('ConfigFilePrefixReadOnly.properties', 'Config')]
   [ReadOnly]
   TConfigFilePrefixReadOnly = class(TMappedPropertiesFile)
-  strict private
+  private
     [PropertyItem('Cod')]
     [NotNull]
-    FCod: Integer;
+    fCod: Integer;
+
     [PropertyItem('Name')]
     [NotNull]
-    FName: string;
-    [PropertyItem('Value')]
-    FValue: Double;
-    [PropertyItem('Date')]
-    FDate: string;
-    [PropertyItem('Valid')]
-    FValid: Boolean;
-    [Ignore]
-    FTransient: string;
-  public
-    constructor Create();
+    fName: string;
 
-    property Cod: Integer read FCod;
-    property Name: string read FName;
-    property Value: Double read FValue;
-    property Date: string read FDate;
-    property Valid: Boolean read FValid;
-    property Transient: string read FTransient;
+    [PropertyItem('Value')]
+    fValue: Double;
+
+    [PropertyItem('Date')]
+    fDate: string;
+
+    [PropertyItem('Valid')]
+    fValid: Boolean;
+
+    [Ignore]
+    fTransient: string;
+  public
+    constructor Create;
+
+    property Cod: Integer read fCod;
+    property Name: string read fName;
+    property Value: Double read fValue;
+    property Date: string read fDate;
+    property Valid: Boolean read fValid;
+    property Transient: string read fTransient;
   end;
 
   [PropertiesFile('ConfigFileReadOnly.properties')]
   [ReadOnly]
   TConfigFileReadOnly = class(TMappedPropertiesFile)
-  strict private
+  private
     [PropertyItem('Cod')]
     [NotNull]
-    FCod: Integer;
+    fCod: Integer;
+
     [PropertyItem('Name')]
     [NotNull]
-    FName: string;
-    [PropertyItem('Value')]
-    FValue: Double;
-    [PropertyItem('Date')]
-    FDate: string;
-    [PropertyItem('Valid')]
-    FValid: Boolean;
-    [Ignore]
-    FTransient: string;
-  public
-    constructor Create();
+    fName: string;
 
-    property Cod: Integer read FCod;
-    property Name: string read FName;
-    property Value: Double read FValue;
-    property Date: string read FDate;
-    property Valid: Boolean read FValid;
-    property Transient: string read FTransient;
+    [PropertyItem('Value')]
+    fValue: Double;
+
+    [PropertyItem('Date')]
+    fDate: string;
+
+    [PropertyItem('Valid')]
+    fValid: Boolean;
+
+    [Ignore]
+    fTransient: string;
+  public
+    constructor Create;
+
+    property Cod: Integer read fCod;
+    property Name: string read fName;
+    property Value: Double read fValue;
+    property Date: string read fDate;
+    property Valid: Boolean read fValid;
+    property Transient: string read fTransient;
   end;
 
   [PropertiesFile('ConfigFile.properties')]
-  TConfigFile= class(TMappedPropertiesFile)
-  strict private
+  TConfigFile = class(TMappedPropertiesFile)
+  private
     [PropertyItem('Cod')]
     [NotNull]
-    FCod: Integer;
+    fCod: Integer;
+
     [PropertyItem('Name')]
     [NotNull]
-    FName: string;
-    [PropertyItem('Value')]
-    FValue: Double;
-    [PropertyItem('Date')]
-    FDate: string;
-    [PropertyItem('Valid')]
-    FValid: Boolean;
-    [Ignore]
-    FTransient: string;
-  public
-    constructor Create();
+    fName: string;
 
-    property Cod: Integer read FCod write FCod;
-    property Name: string read FName write FName;
-    property Value: Double read FValue write FValue;
-    property Date: string read FDate write FDate;
-    property Valid: Boolean read FValid write FValid;
-    property Transient: string read FTransient;
+    [PropertyItem('Value')]
+    fValue: Double;
+
+    [PropertyItem('Date')]
+    fDate: string;
+
+    [PropertyItem('Valid')]
+    fValid: Boolean;
+
+    [Ignore]
+    fTransient: string;
+  public
+    constructor Create;
+
+    property Cod: Integer read fCod write fCod;
+    property Name: string read fName write fName;
+    property Value: Double read fValue write fValue;
+    property Date: string read fDate write fDate;
+    property Valid: Boolean read fValid write fValid;
+    property Transient: string read fTransient;
   end;
 
   TTestPropertiesFileMapping = class(TTestCase)
-  strict private
-
+  private
+    { private declarations }
   protected
     procedure SetUp; override;
     procedure TearDown; override;
   published
-    procedure TestConfigFilePrefixReadOnly();
-    procedure TestConfigFileReadOnly();
-    procedure TestConfigFile();
+    procedure TestConfigFilePrefixReadOnly;
+    procedure TestConfigFileReadOnly;
+    procedure TestConfigFile;
   end;
 
 implementation
@@ -122,130 +144,129 @@ implementation
 
 procedure TTestPropertiesFileMapping.SetUp;
 var
-  vFile: IPropertiesFile;
+  propertiesFile: IPropertiesFile;
 begin
   inherited;
-  vFile := TPropertiesFileFactory.Build();
-  vFile.PropertyItem['Config.Cod'] := '1';
-  vFile.PropertyItem['Config.Name'] := 'Test';
-  vFile.PropertyItem['Config.Value'] := '100';
-  vFile.PropertyItem['Config.Date'] := '21/01/2015';
-  vFile.PropertyItem['Config.Valid'] := '0';
-  vFile.SaveToFile('ConfigFilePrefixReadOnly.properties');
+  propertiesFile := TPropertiesFile.New;
+  propertiesFile.PropertyItem['Config.Cod'] := '1';
+  propertiesFile.PropertyItem['Config.Name'] := 'Test';
+  propertiesFile.PropertyItem['Config.Value'] := '100';
+  propertiesFile.PropertyItem['Config.Date'] := '21/01/2015';
+  propertiesFile.PropertyItem['Config.Valid'] := '0';
+  propertiesFile.SaveToFile('ConfigFilePrefixReadOnly.properties');
 
-  vFile := TPropertiesFileFactory.Build();
-  vFile.PropertyItem['Cod'] := '1';
-  vFile.PropertyItem['Name'] := 'Test';
-  vFile.PropertyItem['Value'] := '100';
-  vFile.PropertyItem['Date'] := '21/01/2015';
-  vFile.PropertyItem['Valid'] := '0';
-  vFile.SaveToFile('ConfigFileReadOnly.properties');
+  propertiesFile := TPropertiesFile.New;
+  propertiesFile.PropertyItem['Cod'] := '1';
+  propertiesFile.PropertyItem['Name'] := 'Test';
+  propertiesFile.PropertyItem['Value'] := '100';
+  propertiesFile.PropertyItem['Date'] := '21/01/2015';
+  propertiesFile.PropertyItem['Valid'] := '0';
+  propertiesFile.SaveToFile('ConfigFileReadOnly.properties');
 end;
 
 procedure TTestPropertiesFileMapping.TearDown;
 begin
   inherited;
-
 end;
 
 procedure TTestPropertiesFileMapping.TestConfigFile;
 var
-  vConfig, vConfig2: TConfigFile;
+  config, config2: TConfigFile;
 begin
-  vConfig := TConfigFile.Create;
+  config := TConfigFile.Create;
   try
-    vConfig.Cod := 1;
-    vConfig.Name := 'Test';
-    vConfig.Value := 100;
-    vConfig.Date := '21/01/2015';
-    vConfig.Valid := True;
+    config.Cod := 1;
+    config.Name := 'Test';
+    config.Value := 100;
+    config.Date := '21/01/2015';
+    config.Valid := True;
   finally
-    FreeAndNil(vConfig);
+    FreeAndNil(config);
   end;
 
   CheckTrue(FileExists('ConfigFile.properties'));
 
-  vConfig := TConfigFile.Create;
-  vConfig2 := TConfigFile.Create;
+  config := TConfigFile.Create;
+  config2 := TConfigFile.Create;
   try
-    vConfig.Cod := 1;
-    vConfig.Name := 'Test';
-    vConfig.Value := 100;
-    vConfig.Date := '21/01/2015';
-    vConfig.Valid := True;
+    config.Cod := 1;
+    config.Name := 'Test';
+    config.Value := 100;
+    config.Date := '21/01/2015';
+    config.Valid := True;
 
-    vConfig.Save;
+    config.Save;
 
-    vConfig2.Reload;
+    config2.Reload;
 
-    CheckTrue(vConfig2.Cod = 1);
-    CheckTrue(vConfig2.Name = 'Test');
-    CheckTrue(vConfig2.Value = 100);
-    CheckTrue(vConfig2.Date = '21/01/2015');
-    CheckTrue(vConfig2.Valid = False);
-    CheckTrue(vConfig2.Transient = 'Transient');
+    CheckTrue(config2.Cod = 1);
+    CheckTrue(config2.Name = 'Test');
+    CheckTrue(config2.Value = 100);
+    CheckTrue(config2.Date = '21/01/2015');
+    CheckTrue(config2.Valid = False);
+    CheckTrue(config2.Transient = 'Transient');
   finally
-    FreeAndNil(vConfig);
-    FreeAndNil(vConfig2);
+    FreeAndNil(config);
+    FreeAndNil(config2);
   end;
 
-  vConfig := TConfigFile.Create;
+  config := TConfigFile.Create;
   try
-    vConfig.Cod := 1;
-    vConfig.Name := 'Test';
-    vConfig.Value := 100;
-    vConfig.Date := '21/01/2015';
-    vConfig.Valid := True;
+    config.Cod := 1;
+    config.Name := 'Test';
+    config.Value := 100;
+    config.Date := '21/01/2015';
+    config.Valid := True;
   finally
-    FreeAndNil(vConfig);
+    FreeAndNil(config);
   end;
 
   CheckTrue(FileExists('ConfigFile.properties'));
 
-  vConfig := TConfigFile.Create;
+  config := TConfigFile.Create;
   try
-    CheckTrue(vConfig.Cod = 1);
-    CheckTrue(vConfig.Name = 'Test');
-    CheckTrue(vConfig.Value = 100);
-    CheckTrue(vConfig.Date = '21/01/2015');
-    CheckTrue(vConfig.Valid = False);
-    CheckTrue(vConfig.Transient = 'Transient');
+    CheckTrue(config.Cod = 1);
+    CheckTrue(config.Name = 'Test');
+    CheckTrue(config.Value = 100);
+    CheckTrue(config.Date = '21/01/2015');
+    CheckTrue(config.Valid = False);
+    CheckTrue(config.Transient = 'Transient');
   finally
-    FreeAndNil(vConfig);
+    FreeAndNil(config);
   end;
 end;
 
 procedure TTestPropertiesFileMapping.TestConfigFilePrefixReadOnly;
 var
-  vConfig: TConfigFilePrefixReadOnly;
+  config: TConfigFilePrefixReadOnly;
 begin
-  vConfig := TConfigFilePrefixReadOnly.Create;
+  config := TConfigFilePrefixReadOnly.Create;
   try
-    CheckTrue(vConfig.Cod = 1);
-    CheckTrue(vConfig.Name = 'Test');
-    CheckTrue(vConfig.Value = 100);
-    CheckTrue(vConfig.Date = '21/01/2015');
-    CheckTrue(vConfig.Valid = False);
-    CheckTrue(vConfig.Transient = 'Transient');
+    CheckTrue(config.Cod = 1);
+    CheckTrue(config.Name = 'Test');
+    CheckTrue(config.Value = 100);
+    CheckTrue(config.Date = '21/01/2015');
+    CheckTrue(config.Valid = False);
+    CheckTrue(config.Transient = 'Transient');
   finally
-    FreeAndNil(vConfig);
+    FreeAndNil(config);
   end;
 end;
 
 procedure TTestPropertiesFileMapping.TestConfigFileReadOnly;
 var
-  vConfig: TConfigFileReadOnly;
+  config: TConfigFileReadOnly;
 begin
-  vConfig := TConfigFileReadOnly.Create;
+  config := TConfigFileReadOnly.Create;
   try
-    CheckTrue(vConfig.Cod = 1);
-    CheckTrue(vConfig.Name = 'Test');
-    CheckTrue(vConfig.Value = 100);
-    CheckTrue(vConfig.Date = '21/01/2015');
-    CheckTrue(vConfig.Valid = False);
-    CheckTrue(vConfig.Transient = 'Transient');
+    CheckTrue(config.Cod = 1);
+    CheckTrue(config.Name = 'Test');
+    CheckTrue(config.Value = 100);
+    CheckTrue(config.Date = '21/01/2015');
+    CheckTrue(config.Valid = False);
+    CheckTrue(config.Transient = 'Transient');
   finally
-    FreeAndNil(vConfig);
+    FreeAndNil(config);
   end;
 end;
 
@@ -253,21 +274,21 @@ end;
 
 constructor TConfigFilePrefixReadOnly.Create;
 begin
-  FTransient := 'Transient';
+  fTransient := 'Transient';
 end;
 
 { TConfigFileReadOnly }
 
 constructor TConfigFileReadOnly.Create;
 begin
-  FTransient := 'Transient';
+  fTransient := 'Transient';
 end;
 
 { TConfigFile }
 
 constructor TConfigFile.Create;
 begin
-  FTransient := 'Transient';
+  fTransient := 'Transient';
 end;
 
 initialization
