@@ -152,7 +152,7 @@ begin
   propertiesFile.PropertyItem['Config.Name'] := 'Test';
   propertiesFile.PropertyItem['Config.Value'] := '100';
   propertiesFile.PropertyItem['Config.Date'] := '21/01/2015';
-  propertiesFile.PropertyItem['Config.Valid'] := '0';
+  propertiesFile.PropertyItem['Config.Valid'] := 'True';
   propertiesFile.SaveToFile('ConfigFilePrefixReadOnly.properties');
 
   propertiesFile := TPropertiesFile.New;
@@ -160,7 +160,7 @@ begin
   propertiesFile.PropertyItem['Name'] := 'Test';
   propertiesFile.PropertyItem['Value'] := '100';
   propertiesFile.PropertyItem['Date'] := '21/01/2015';
-  propertiesFile.PropertyItem['Valid'] := '0';
+  propertiesFile.PropertyItem['Valid'] := 'True';
   propertiesFile.SaveToFile('ConfigFileReadOnly.properties');
 end;
 
@@ -203,7 +203,7 @@ begin
     CheckTrue(config2.Name = 'Test');
     CheckTrue(config2.Value = 100);
     CheckTrue(config2.Date = '21/01/2015');
-    CheckTrue(config2.Valid = False);
+    CheckTrue(config2.Valid = True);
     CheckTrue(config2.Transient = 'Transient');
   finally
     FreeAndNil(config);
@@ -229,7 +229,7 @@ begin
     CheckTrue(config.Name = 'Test');
     CheckTrue(config.Value = 100);
     CheckTrue(config.Date = '21/01/2015');
-    CheckTrue(config.Valid = False);
+    CheckTrue(config.Valid = True);
     CheckTrue(config.Transient = 'Transient');
   finally
     FreeAndNil(config);
@@ -246,7 +246,7 @@ begin
     CheckTrue(config.Name = 'Test');
     CheckTrue(config.Value = 100);
     CheckTrue(config.Date = '21/01/2015');
-    CheckTrue(config.Valid = False);
+    CheckTrue(config.Valid = True);
     CheckTrue(config.Transient = 'Transient');
   finally
     FreeAndNil(config);
@@ -263,7 +263,7 @@ begin
     CheckTrue(config.Name = 'Test');
     CheckTrue(config.Value = 100);
     CheckTrue(config.Date = '21/01/2015');
-    CheckTrue(config.Valid = False);
+    CheckTrue(config.Valid = True);
     CheckTrue(config.Transient = 'Transient');
   finally
     FreeAndNil(config);

@@ -282,7 +282,9 @@ begin
                 enumValue := field.GetValue(Self);
                 enumValue := TValue.FromOrdinal(enumValue.TypeInfo, GetEnumValue(enumValue.TypeInfo, fPropFile.PropertyItem[fieldName]));
                 field.SetValue(Self, enumValue);
-              end;
+              end
+              else
+                field.SetValue(Self, StrToBoolDef(fPropFile.PropertyItem[fieldName], False));
             fFieldList.AddOrSetValue(fieldName, field);
           end;
       end;
