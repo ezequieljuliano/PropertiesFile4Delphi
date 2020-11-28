@@ -1,0 +1,48 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{68EA9B76-91C9-4B7F-B40A-D01294155B48}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="storage\StorageApp.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="mapping\MappingApp.dproj">
+            <Dependencies/>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="StorageApp">
+        <MSBuild Projects="storage\StorageApp.dproj"/>
+    </Target>
+    <Target Name="StorageApp:Clean">
+        <MSBuild Projects="storage\StorageApp.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="StorageApp:Make">
+        <MSBuild Projects="storage\StorageApp.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="MappingApp">
+        <MSBuild Projects="mapping\MappingApp.dproj"/>
+    </Target>
+    <Target Name="MappingApp:Clean">
+        <MSBuild Projects="mapping\MappingApp.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="MappingApp:Make">
+        <MSBuild Projects="mapping\MappingApp.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="StorageApp;MappingApp"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="StorageApp:Clean;MappingApp:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="StorageApp:Make;MappingApp:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>

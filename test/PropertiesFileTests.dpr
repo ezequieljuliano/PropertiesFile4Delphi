@@ -1,4 +1,4 @@
-program PropertiesFile4DTestsMapping;
+program PropertiesFileTests;
 {
 
   Delphi DUnit Test Project
@@ -15,13 +15,15 @@ program PropertiesFile4DTestsMapping;
 {$ENDIF}
 
 uses
-  DUnitTestRunner,
-  PropertiesFile4D.UnitTest.Mapping in 'PropertiesFile4D.UnitTest.Mapping.pas',
-  PropertiesFile4D in '..\src\PropertiesFile4D.pas',
-  PropertiesFile4D.Mapping in '..\src\PropertiesFile4D.Mapping.pas',
-  PropertiesFile4D.Impl in '..\src\PropertiesFile4D.Impl.pas';
 
-{ R *.RES }
+  DUnitTestRunner,
+  PropertiesFile.Mapping in '..\src\PropertiesFile.Mapping.pas',
+  PropertiesFile in '..\src\PropertiesFile.pas',
+  PropertiesFile.Storage in '..\src\PropertiesFile.Storage.pas',
+  PropertiesFile.Storage.Test in 'PropertiesFile.Storage.Test.pas',
+  PropertiesFile.Mapping.Test in 'PropertiesFile.Mapping.Test.pas';
+
+{$R *.RES}
 
 begin
 
